@@ -1,0 +1,25 @@
+{
+    "name": "appzz/pushover-client",
+    "description": "Pushover client",
+    "type": "library",
+    "keywords": [
+        "pushover"
+    ],
+    "homepage": "https://github.com/a-pp-zz/pushover/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CoolSwitcher",
+            "email": "ds@appzz.pw",
+            "role": "lead"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "appzz/arr": "1.*",
+        "appzz/curl-client": "2.*"
+    },
+    "autoload": {
+        "psr-4": {"AppZz\\Http\\": "src/"}
+    }
+}
