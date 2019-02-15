@@ -8,7 +8,8 @@ use AppZz\Helpers\Arr;
  */
 class Pushover {
 
-	const ENDPOINT = 'https://api.pushover.net/1/messages.json';
+    const ENDPOINT = 'https://api.pushover.net/1/messages.json';
+    const UA       = 'AppZz Pushover Client';
 
     private $_params;
 
@@ -65,15 +66,15 @@ class Pushover {
     const PRIORITY_HIGH = 1;
     const PRIORITY_HIGHEST = 2;
 
-    const UA = 'AppZz Pushover Client';
-
 	public function __construct ($user = NULL, $token = NULL)
     {
-        if ($user)
+        if ($user) {
             $this->_params['user'] = $user;
+        }
 
-        if ($token)
+        if ($token) {
             $this->_params['token'] = $token;
+        }
 	}
 
     public static function factory ($user = NULL, $token = NULL)
@@ -137,13 +138,14 @@ class Pushover {
     public function send ()
     {
         $request = CurlClient::post(Pushover::ENDPOINT, $this->_params, [], ['CURLOPT_SAFE_UPLOAD'=>TRUE])
-                        ->mime('form')
-                        ->agent(Pushover::UA)
+                        ->form()
+                        ->user_agent(Pushover::UA)
                         ->accept('gzip', 'json');
 
+        $response = $request->send();
         $ret = new \stdClass;
-        $ret->response = $request->send();
-        $ret->result = $request->get_body();
+        $ret->response = $response->get_status();
+        $ret->result = $response->get_body();
         return $ret;
     }
 }
